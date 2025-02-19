@@ -4,9 +4,12 @@ const bodyParser = require('body-parser');
 const app = express();
 const dbConfig = require('./app/config/db.config');
 const db = require('./app/models');
+const axios = require("axios");
+const cron = require("node-cron");
+
 require('dotenv').config();
-db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`)
-    // await db.mongoose.connect(process.env.MONGODB_URI)
+// db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`)
+    db.mongoose.connect(process.env.MONGODB_URI)
     .then(console.log('Connected to MongoDB', `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`))
     .catch(async (err) => {
         console.log('Error connecting to MongoDB', err);
@@ -28,6 +31,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     res.json({ message: "Welcome to the application." });
+});
+
+// Cron job to call '/' every 30 seconds
+cron.schedule("*/30 * * * * *", async () => {
+    try {
+        console.log("Calling '/' route...");
+        // await axios.get("http://localhost:" + PORT);
+        await axios.get("https://sporion-3-0-backend.onrender.com/");
+    } catch (error) {
+        console.error("Error calling '/' route:", error.message);
+    }
 });
 
 // routes
