@@ -7,6 +7,8 @@ const VolleyBallModel = new Schema({
     teamASets: String,
     teamBPoints: String,
     teamBSets: String,
+    teamAName: String,
+    teamBName: String,
     matchStatus: String,
     winner: String,
 }, { timestamps: true });

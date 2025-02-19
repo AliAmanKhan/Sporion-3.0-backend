@@ -6,6 +6,8 @@ const kabaddiModel = new Schema({
     teamAScore: String,
     teamASet: String,
     teamBScore: String,
+    teamAName: String,
+    teamBName: String,
     teamBSet: String,
     matchStatus: String,
     winner: String,
