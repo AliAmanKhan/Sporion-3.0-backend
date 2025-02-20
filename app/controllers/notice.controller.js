@@ -60,7 +60,7 @@ exports.updateNotice = async (req, res) => {
 
 exports.getNotice = async (req, res) => {
   try {
-    const notice = await Notice.find({});
+    const notice = await Notice.find({}).sort({ createdAt: -1 });
 
     return res.status(200).json({notice});
   } catch (error) {
